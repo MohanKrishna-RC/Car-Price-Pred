@@ -5,6 +5,8 @@ import pickle
 import numpy as np
 import sklearn
 from sklearn.preprocessing import StandardScaler
+from datetime import datetime
+import time
 app = Flask(__name__)
 model = pickle.load(open('random_forest_regression_model.pkl', 'rb'))
 @app.route('/',methods=['GET'])
@@ -29,7 +31,12 @@ def predict():
         else:
             Fuel_Type_Petrol=0
             Fuel_Type_Diesel=1
-        Year=2020-Year
+        
+        strings = time.strftime("%Y,%m,%d,%H,%M,%S")
+        t = strings.split(',')
+        numbers = [ int(x) for x in t ]
+        Currentyear = numbers[0]
+        Year=Currentyear-Year
         Seller_Type_Individual=request.form['Seller_Type_Individual']
         if(Seller_Type_Individual=='Individual'):
             Seller_Type_Individual=1
